@@ -1,0 +1,45 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.users__pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: opacity .5s;
+}
+
+.users__pagination .ui.selection.dropdown {
+  min-width: 57px;
+  margin-left: 10px;
+}
+
+.users__inner {
+  flex-grow: 1;
+  position: relative;
+  box-shadow: inset 0 5px 6px -6px #ccc, inset 0 -5px 6px -6px #ccc;
+}
+
+.users__container {
+  align-content: flex-start;
+  position: absolute;
+  left: 5px;
+  top: 18px;
+  right: 10px;
+  bottom: 19px;
+  overflow-y: auto;
+  opacity: 0;
+}
+
+.users__container>.ui.card {
+  width: 100%;
+}
+
+
+.users__container_loaded {
+  opacity: 1;
+  transition: opacity .5s;
+}

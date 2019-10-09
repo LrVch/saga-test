@@ -1,9 +1,10 @@
-import { Button, Card, Image, Segment } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 
 import React from 'react'
 
 const UserCard = ({
   user: {
+    id,
     name, username, email,
     address: {
       street,
@@ -12,15 +13,16 @@ const UserCard = ({
       zipcode
     },
     phone,
-    website,
     company: {
       name: cName,
       catchPhrase,
     }
-  }
+  },
+  disabled,
+  onPosts= () => {},
+  onAlbums = () => {}
 }) => {
   return (
-
     <Card>
       <Card.Content>
         <Card.Header>{name}</Card.Header>
@@ -43,10 +45,10 @@ const UserCard = ({
       </Card.Content>
       <Card.Content extra>
         <div className='ui two buttons'>
-          <Button basic color='green'>
+          <Button disabled={disabled} onClick={onPosts.bind(null, id)} basic color='green'>
             Posts
           </Button>
-          <Button basic color='green'>
+          <Button disabled={disabled} onClick={onAlbums.bind(null, id)} basic color='green'>
             Albums
           </Button>
         </div>

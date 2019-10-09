@@ -1,6 +1,6 @@
-import { all, call, put, takeEvery } from 'redux-saga/effects'
+import { all } from 'redux-saga/effects'
 
-const delay = (ms) => new Promise(res => setTimeout(res, ms))
+// const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 // eslint-disable-next-line require-yield
 // export function* helloSaga() {

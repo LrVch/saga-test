@@ -2,7 +2,8 @@ import * as actionsTypes from '../actions';
 
 const initialState = {
   users: [],
-  isUsersLoading: false
+  isUsersLoading: true,
+  selectedUser: null
 }
 
 const usersReducer = (state = initialState, { type, payload }) => {
@@ -28,6 +29,20 @@ const usersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isUsersLoading: false
+      }
+    }
+
+    case actionsTypes.USERS_SET_SELECTED_USER: {
+      return {
+        ...state,
+        selectedUser: payload.id
+      }
+    }
+
+    case actionsTypes.USERS_CLEAR_SELECTED_USER: {
+      return {
+        ...state,
+        selectedUser: null
       }
     }
 
