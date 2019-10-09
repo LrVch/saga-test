@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content__header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.content__inner {
+  flex-grow: 1;
+}
+

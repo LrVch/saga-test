@@ -1,9 +1,13 @@
 import * as actionsTypes from '../actions';
 
 const initialState = {
-  users: [],
+  albums: [],
+  isContentLoading: false,
   isUsersLoading: true,
-  selectedUser: null
+  posts: [],
+  selectedUser: null,
+  users: [],
+  showing: null
 }
 
 const usersReducer = (state = initialState, { type, payload }) => {
@@ -45,6 +49,55 @@ const usersReducer = (state = initialState, { type, payload }) => {
         selectedUser: null
       }
     }
+
+    case actionsTypes.USERS_GET_USER_ALBUMS_REQUEST:
+    case actionsTypes.USERS_GET_USER_POSTS_REQUEST: {
+      return {
+        ...state,
+        isContentLoading: true
+      }
+    }
+
+    case actionsTypes.USERS_GET_USER_POSTS_FAIL:
+    case actionsTypes.USERS_GET_USER_ALBUMS_FAIL: {
+      return {
+        ...state,
+        isContentLoading: false
+      }
+    }
+
+    case actionsTypes.USERS_GET_USER_POSTS_SUCCESS: {
+      return {
+        ...state,
+        isContentLoading: false,
+        posts: payload.posts
+      }
+    }
+
+    case actionsTypes.USERS_GET_USER_ALBUMS_SUCCESS: {
+      return {
+        ...state,
+        isContentLoading: false,
+        albums: payload.albums
+      }
+    }
+
+    case actionsTypes.USERS_CLEAR_CONTENT: {
+      return {
+        ...state,
+        albums: [],
+        posts: []
+      }
+    }
+
+    case actionsTypes.USERS_SET_SHOWING: {
+      return {
+        ...state,
+        showing: payload.type
+      }
+    }
+
+    
 
     default:
       return state

@@ -2,7 +2,7 @@ import './Users.css';
 
 import { Card, Dimmer, Dropdown, Loader, Pagination } from 'semantic-ui-react'
 import React, { useEffect, useState } from 'react'
-import { getAllUsersRequest, usersSetSelecteduser } from '../../store/actions'
+import { getAllUsersRequest, usersGetUserAlbumsRequest, usersGetUserPostsRequest, usersSetSelecteduser, usersSetShowing } from '../../store/actions'
 import { getIsUsersLoading, getSelectedUser, getUsers } from '../../store/selectors/users'
 
 import UserCard from '../../components/UserCard/UserCard'
@@ -10,11 +10,14 @@ import { connect } from 'react-redux'
 
 const Users = ({
   getAllUsersRequest,
+  isUsersLoading,
   selectedUser,
   users,
-  usersSetSelecteduser,
+  usersGetUserAlbumsRequest,
+  usersGetUserPostsRequest,
   usersOnPageCount,
-  isUsersLoading
+  usersSetSelecteduser,
+  usersSetShowing,
 }) => {
   const [pageUsers, setPageUsers] = useState([])
   const [totalPages, setTotalPages] = useState(0)
@@ -27,6 +30,18 @@ const Users = ({
 
   const onPageCountChange = value => {
     setUsersOnPage(parseInt(value))
+  }
+
+  const handePosts = id => {
+    usersSetSelecteduser(id)
+    usersGetUserPostsRequest(id)
+    usersSetShowing('posts')
+  }
+
+  const handeAlbums = id => {
+    usersSetSelecteduser(id)
+    usersGetUserAlbumsRequest(id)
+    usersSetShowing('albums')
   }
 
   useEffect(() => {
@@ -74,6 +89,7 @@ const Users = ({
           onPageChange={(_, data) => onPageChange(data.activePage)}
         />
         <Dropdown
+          disabled={!!selectedUser}
           onChange={(_, {value}) => onPageCountChange(value)}
           selection
           floating
@@ -110,8 +126,8 @@ const Users = ({
             return (
               <UserCard
                 disabled={selectedUser && user.id !== selectedUser}
-                onPosts={id => usersSetSelecteduser(id)}
-                onAlbums={id => usersSetSelecteduser(id)}
+                onPosts={id => handePosts(id)}
+                onAlbums={id => handeAlbums(id)}
                 key={i}
                 user={user}
               />
@@ -130,8 +146,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  getAllUsersRequest: () => dispatch(getAllUsersRequest()),
-  usersSetSelecteduser: (id) => dispatch(usersSetSelecteduser(id))
+  getAllUsersRequest: _ => dispatch(getAllUsersRequest()),
+  usersSetSelecteduser: id => dispatch(usersSetSelecteduser(id)),
+  usersGetUserPostsRequest: id => dispatch(usersGetUserPostsRequest(id)),
+  usersGetUserAlbumsRequest: id => dispatch(usersGetUserAlbumsRequest(id)),
+  usersSetShowing: type => dispatch(usersSetShowing(type))
 })
 
 export default connect(

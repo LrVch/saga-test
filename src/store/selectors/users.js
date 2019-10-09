@@ -17,3 +17,14 @@ export const getIsUsersLoading= createSelector(
   usersState => usersState.isUsersLoading
 )
 
+export const getPosts= createSelector(
+  usersState,
+  usersState => usersState.posts
+)
+
+export const getAlbums= createSelector(
+  usersState,
+  usersState => usersState.albums
+)
+
+
