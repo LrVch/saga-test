@@ -6,9 +6,21 @@
 .content__header {
   display: flex;
   justify-content: flex-end;
+  padding-bottom: 15px;
 }
 
 .content__inner {
   flex-grow: 1;
+  position: relative;
+}
+
+.content__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 5px;
 }
 

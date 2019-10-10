@@ -1,18 +1,22 @@
 import './Content.css'
 
-import { Button, Icon, Segment } from 'semantic-ui-react'
-import { getUserAlbums, getUserPosts } from '../../store/sagas/users'
+import { Button, Card, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react'
+import { getAlbums, getIsContentLoading, getPosts, getSelectedUser, getShowing } from '../../store/selectors/users'
 import { usersClearContent, usersSetSelecteduser, usersSetShowing } from '../../store/actions'
 
+import Post from '../../components/Post/Post'
 import React from 'react'
 import { connect } from 'react-redux'
-import { getSelectedUser } from '../../store/selectors/users'
 
 const Content = ({
-  usersSetSelecteduser,
+  albums,
+  isContentLoading,
+  posts,
   selectedUser,
   usersClearContent,
-  usersSetShowing
+  usersSetSelecteduser,
+  usersSetShowing,
+  showing
 }) => {
   const handleOnClose = () => {
     usersClearContent()
@@ -21,24 +25,46 @@ const Content = ({
   }
   return (
     <>
-    {selectedUser && <Segment className="content full-height">
-      <div className="content__header">
-        <Button onClick={handleOnClose} icon>
-          <Icon name='times' />
-        </Button>
-      </div>
-      <div className="content__inner">
-        content
-      </div>
-    </Segment>}
+      {selectedUser && <Segment className="content full-height">
+
+        <div className="content__header">
+          <Button onClick={handleOnClose} icon>
+            <Icon name='times' />
+          </Button>
+        </div>
+
+        <div className="content__inner">
+
+          {isContentLoading && <Dimmer active inverted>
+            <Loader inverted>Waiting</Loader>
+          </Dimmer>}
+
+          {!isContentLoading && showing === 'posts' && <div className="content__info">
+            {posts.map((post, i) => <Post post={post} key={i} />)}
+          </div>}
+
+          {!isContentLoading && showing === 'albums' && <Card.Group itemsPerRow={4}>
+            {albums.map((album, i) => <Card key={i} color='green'>
+            <Card.Content>
+            <Card.Description>
+              {album.title}
+            </Card.Description>
+            </Card.Content>
+            </Card>)}
+          </Card.Group>}
+
+        </div>
+      </Segment>}
     </>
   )
 }
 
 const mapStateToProps = state => ({
   selectedUser: getSelectedUser(state),
-  posts: getUserPosts(state),
-  albums: getUserAlbums(state)
+  posts: getPosts(state),
+  albums: getAlbums(state),
+  isContentLoading: getIsContentLoading(state),
+  showing: getShowing(state)
 })
 
 const mapDispatchToProps = dispatch => ({

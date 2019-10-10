@@ -27,4 +27,14 @@ export const getAlbums= createSelector(
   usersState => usersState.albums
 )
 
+export const getIsContentLoading= createSelector(
+  usersState,
+  usersState => usersState.isContentLoading
+)
+
+export const getShowing= createSelector(
+  usersState,
+  usersState => usersState.showing
+)
+
 
