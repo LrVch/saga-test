@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/saga-test/static/css/main.651efcdc.chunk.css",
+    "main.js": "/saga-test/static/js/main.318a07eb.chunk.js",
+    "main.js.map": "/saga-test/static/js/main.318a07eb.chunk.js.map",
+    "runtime-main.js": "/saga-test/static/js/runtime-main.ebbc8a5d.js",
+    "runtime-main.js.map": "/saga-test/static/js/runtime-main.ebbc8a5d.js.map",
+    "static/css/2.12f491f5.chunk.css": "/saga-test/static/css/2.12f491f5.chunk.css",
+    "static/js/2.cbe34deb.chunk.js": "/saga-test/static/js/2.cbe34deb.chunk.js",
+    "static/js/2.cbe34deb.chunk.js.map": "/saga-test/static/js/2.cbe34deb.chunk.js.map",
+    "index.html": "/saga-test/index.html",
+    "precache-manifest.d7fdd73ce3f68ddcf92d51c574550959.js": "/saga-test/precache-manifest.d7fdd73ce3f68ddcf92d51c574550959.js",
+    "service-worker.js": "/saga-test/service-worker.js",
+    "static/css/2.12f491f5.chunk.css.map": "/saga-test/static/css/2.12f491f5.chunk.css.map",
+    "static/css/main.651efcdc.chunk.css.map": "/saga-test/static/css/main.651efcdc.chunk.css.map",
+    "static/media/semantic.min.css": "/saga-test/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ebbc8a5d.js",
+    "static/css/2.12f491f5.chunk.css",
+    "static/js/2.cbe34deb.chunk.js",
+    "static/css/main.651efcdc.chunk.css",
+    "static/js/main.318a07eb.chunk.js"
+  ]
+}
