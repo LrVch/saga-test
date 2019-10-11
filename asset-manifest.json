@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/saga-test/static/css/main.92222a2b.chunk.css",
-    "main.js": "/saga-test/static/js/main.76329b14.chunk.js",
-    "main.js.map": "/saga-test/static/js/main.76329b14.chunk.js.map",
+    "main.js": "/saga-test/static/js/main.c872e19b.chunk.js",
+    "main.js.map": "/saga-test/static/js/main.c872e19b.chunk.js.map",
     "runtime-main.js": "/saga-test/static/js/runtime-main.ebbc8a5d.js",
     "runtime-main.js.map": "/saga-test/static/js/runtime-main.ebbc8a5d.js.map",
     "static/css/2.4984630c.chunk.css": "/saga-test/static/css/2.4984630c.chunk.css",
-    "static/js/2.67c82981.chunk.js": "/saga-test/static/js/2.67c82981.chunk.js",
-    "static/js/2.67c82981.chunk.js.map": "/saga-test/static/js/2.67c82981.chunk.js.map",
+    "static/js/2.7a2456a6.chunk.js": "/saga-test/static/js/2.7a2456a6.chunk.js",
+    "static/js/2.7a2456a6.chunk.js.map": "/saga-test/static/js/2.7a2456a6.chunk.js.map",
     "index.html": "/saga-test/index.html",
-    "precache-manifest.095c0ad9ab1031b7f8ec32d1aaa6304d.js": "/saga-test/precache-manifest.095c0ad9ab1031b7f8ec32d1aaa6304d.js",
+    "precache-manifest.bf6a45c692d0b1b19ecfcc8594ca75e4.js": "/saga-test/precache-manifest.bf6a45c692d0b1b19ecfcc8594ca75e4.js",
     "service-worker.js": "/saga-test/service-worker.js",
     "static/css/2.4984630c.chunk.css.map": "/saga-test/static/css/2.4984630c.chunk.css.map",
     "static/css/main.92222a2b.chunk.css.map": "/saga-test/static/css/main.92222a2b.chunk.css.map",
@@ -18,8 +18,8 @@
   "entrypoints": [
     "static/js/runtime-main.ebbc8a5d.js",
     "static/css/2.4984630c.chunk.css",
-    "static/js/2.67c82981.chunk.js",
+    "static/js/2.7a2456a6.chunk.js",
     "static/css/main.92222a2b.chunk.css",
-    "static/js/main.76329b14.chunk.js"
+    "static/js/main.c872e19b.chunk.js"
   ]
 }
