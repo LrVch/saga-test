@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/saga-test/static/css/main.92222a2b.chunk.css",
-    "main.js": "/saga-test/static/js/main.fed06e96.chunk.js",
-    "main.js.map": "/saga-test/static/js/main.fed06e96.chunk.js.map",
+    "main.js": "/saga-test/static/js/main.128ceda9.chunk.js",
+    "main.js.map": "/saga-test/static/js/main.128ceda9.chunk.js.map",
     "runtime-main.js": "/saga-test/static/js/runtime-main.ebbc8a5d.js",
     "runtime-main.js.map": "/saga-test/static/js/runtime-main.ebbc8a5d.js.map",
     "static/css/2.4984630c.chunk.css": "/saga-test/static/css/2.4984630c.chunk.css",
     "static/js/2.5fde5af2.chunk.js": "/saga-test/static/js/2.5fde5af2.chunk.js",
     "static/js/2.5fde5af2.chunk.js.map": "/saga-test/static/js/2.5fde5af2.chunk.js.map",
     "index.html": "/saga-test/index.html",
-    "precache-manifest.e22e061277c28fd88e3eed5a6fbfa937.js": "/saga-test/precache-manifest.e22e061277c28fd88e3eed5a6fbfa937.js",
+    "precache-manifest.ffe5b26e014dba5983139072817f0c96.js": "/saga-test/precache-manifest.ffe5b26e014dba5983139072817f0c96.js",
     "service-worker.js": "/saga-test/service-worker.js",
     "static/css/2.4984630c.chunk.css.map": "/saga-test/static/css/2.4984630c.chunk.css.map",
     "static/css/main.92222a2b.chunk.css.map": "/saga-test/static/css/main.92222a2b.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.4984630c.chunk.css",
     "static/js/2.5fde5af2.chunk.js",
     "static/css/main.92222a2b.chunk.css",
-    "static/js/main.fed06e96.chunk.js"
+    "static/js/main.128ceda9.chunk.js"
   ]
 }
