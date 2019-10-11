@@ -115,19 +115,19 @@ function* showSuccessLoadingAlbumsNotification() {
 }
 
 function* showThreeUsersNotification() {
-  // let isShown
+  let isShown
 
-  while (true) {
+  while (!isShown) {
     yield take([USERS_GET_USER_POSTS_SUCCESS, USERS_GET_USER_ALBUMS_SUCCESS])
     const viewedUsers = yield select(getViewedUsers)
     const usersEdge = yield select(getUsersEdge)
 
     if (viewedUsers.length === usersEdge) {
-      const isShown =   yield select(getThreeUserNorificationisShown)
+      // const isShownU =   yield select(getThreeUserNorificationisShown)
 
-      if (!isShown) {
+      // if (!isShownU) {
         const users = yield select(getUsersByIds)
-        const names = users.map(u => u.name)
+        const names = users.map(u => u.name)  
 
         yield put(uiSetNotificationState(true))
         
@@ -139,7 +139,9 @@ function* showThreeUsersNotification() {
           color: 'green',
           onDismiss: () => {}
         })
-      }
+
+        isShown = true
+      // }
     }
   }
 }
