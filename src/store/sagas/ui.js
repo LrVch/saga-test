@@ -115,6 +115,8 @@ function* showSuccessLoadingAlbumsNotification() {
 }
 
 function* showThreeUsersNotification() {
+  // let isShown
+
   while (true) {
     yield take([USERS_GET_USER_POSTS_SUCCESS, USERS_GET_USER_ALBUMS_SUCCESS])
     const viewedUsers = yield select(getViewedUsers)

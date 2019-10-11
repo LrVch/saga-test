@@ -1,6 +1,8 @@
 import {
   USERS_CLEAR_CONTENT,
+  USERS_GET_USER_ALBUMS_FAIL,
   USERS_GET_USER_ALBUMS_REQUEST,
+  USERS_GET_USER_POSTS_FAIL,
   USERS_GET_USER_POSTS_REQUEST,
   getAllUsersFail,
   getAllUsersSuccess,
@@ -13,6 +15,8 @@ import {
   all,
   call,
   cancel,
+  cancelled,
+  delay,
   fork,
   put,
   select,
@@ -33,55 +37,92 @@ export function* getUsers() {
 }
 
 export function* userPosts(id) {
-  try {
-    const posts = yield call(UserService.getUserPosts, id)
-    yield put(usersGetUserPostsSuccess(posts))
-  } catch (error) {
-    console.error(error)
+  for (let i = 0; i < 5; i++) {
+    try {
+      const posts = yield call(UserService.getUserPosts, id)
+      yield put(usersGetUserPostsSuccess(posts))
+      return
+    } catch (error) {
+      if (i < 4) {
+        yield delay(1000);
+      }
+    } finally {
+      if (yield cancelled()) {
+        break
+      }
+    }
+  }
+
+  const cancelResult = yield cancelled()
+
+  if (!cancelResult) {
     yield put(usersGetUserPostsFail())
   }
 }
 
 export function* userAlbums(id) {
-  try {
-    const albums = yield call(UserService.getUserAlbums, id)
-    yield put(usersGetUserAlbumsSuccess(albums))
-  } catch (error) {
-    console.error(error)
+  for (let i = 0; i < 5; i++) {
+    try {
+      const albums = yield call(UserService.getUserAlbums, id)
+      yield put(usersGetUserAlbumsSuccess(albums))
+      return
+    } catch (error) {
+      if (i < 4) {
+        yield delay(1000);
+      }
+    } finally {
+      if (yield cancelled()) {
+        break
+      }
+    }
+  }
+
+  const cancelResult = yield cancelled()
+
+  if (!cancelResult) {
     yield put(usersGetUserAlbumsFail())
+
   }
 }
 
-export function* getUserPosts(action) {
-  const existedPosts = yield select(getPosts)
+export function* getUserPosts() {
+  while (true) {
+    const { payload: { id } } = yield take('USERS_GET_USER_POSTS_REQUEST')
+    const existedPosts = yield select(getPosts)
 
-  if (existedPosts.length) {
-    return yield put(usersGetUserPostsSuccess(existedPosts))
+    if (existedPosts.length) {
+      yield put(usersGetUserPostsSuccess(existedPosts))
+    } else {
+      const task = yield fork(userPosts, id)
+      const { type } = yield take([USERS_GET_USER_ALBUMS_REQUEST, USERS_CLEAR_CONTENT, USERS_GET_USER_POSTS_FAIL])
+      if (type !== USERS_GET_USER_POSTS_FAIL) {
+        yield cancel(task)
+      }
+    }
   }
-
-  const { id } = action.payload
-  const task = yield fork(userPosts, id)
-  yield take([USERS_GET_USER_ALBUMS_REQUEST, USERS_CLEAR_CONTENT])
-  yield cancel(task)
 }
 
-export function* getUserAlbums(action) {
-  const existedAlbums = yield select(getAlbums)
+export function* getUserAlbums() {
+  while (true) {
+    const { payload: { id } } = yield take('USERS_GET_USER_ALBUMS_REQUEST')
+    const existedAlbums = yield select(getAlbums)
 
-  if (existedAlbums.length) {
-    return yield put(usersGetUserAlbumsSuccess(existedAlbums))
+    if (existedAlbums.length) {
+      yield put(usersGetUserAlbumsSuccess(existedAlbums))
+    } else {
+      const task = yield fork(userAlbums, id)
+      const { type } = yield take([USERS_GET_USER_POSTS_REQUEST, USERS_CLEAR_CONTENT, USERS_GET_USER_ALBUMS_FAIL])
+      if (type !== USERS_GET_USER_ALBUMS_FAIL) {
+        yield cancel(task)
+      }
+    }
   }
-
-  const { id } = action.payload
-  const task = yield fork(userAlbums, id)
-  yield take([USERS_GET_USER_ALBUMS_REQUEST, USERS_CLEAR_CONTENT])
-  yield cancel(task)
 }
 
 export default function* usersSaga() {
   yield all([
     yield takeEvery('USERS_GET_ALL_USERS_REQUEST', getUsers),
-    yield takeEvery('USERS_GET_USER_POSTS_REQUEST', getUserPosts),
-    yield takeEvery('USERS_GET_USER_ALBUMS_REQUEST', getUserAlbums)
+    getUserAlbums(),
+    getUserPosts()
   ])
 }
