@@ -1,7 +1,8 @@
 import * as actionsTypes from '../actions';
 
 const initialState = {
-  isOnline: true
+  isOnline: true,
+  threeUserNorificationisShown: false
 }
 
 const uiReducer = (state = initialState, { type, payload }) => {
@@ -14,6 +15,16 @@ const uiReducer = (state = initialState, { type, payload }) => {
         isOnline
       }
     }
+
+    case actionsTypes.UI_SET_NOTIFICATION_STATE: {
+      const { state: threeUserNorificationisShown} = payload
+      return {
+        ...state,
+        threeUserNorificationisShown
+      }
+    }
+
+
 
     default:
       return state

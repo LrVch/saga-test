@@ -6,6 +6,7 @@ import { getAllUsersRequest, usersGetUserAlbumsRequest, usersGetUserPostsRequest
 import { getIsUsersLoading, getSelectedUser, getUsers } from '../../store/selectors/users'
 
 import Block from '../../components/Block/Block';
+import OfflineBage from '../../components/OfflineBage/OfflineBage';
 import UserCard from '../../components/UserCard/UserCard'
 import { connect } from 'react-redux'
 import { getIsOnLine } from '../../store/selectors';
@@ -75,6 +76,7 @@ const Users = ({
 
   return (
     <div className="users">
+      <OfflineBage isOnLine={isOnLine}/>
       {!isOnLine && <Block />}
       <div className="users__pagination" style={{
         opacity: !pageUsers.length ? 0 : 1,

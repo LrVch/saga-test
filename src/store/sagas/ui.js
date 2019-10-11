@@ -8,11 +8,12 @@ import {
 } from '../actions/users'
 import { all, call, put, select, take } from 'redux-saga/effects'
 import { getAlbums, getPosts, getUsersByIds, getUsersEdge, getViewedUsers } from '../selectors/users'
+import { uiSetIsOnline, uiSetNotificationState } from '../actions'
 
 import React from 'react'
 import { eventChannel } from 'redux-saga'
+import { getThreeUserNorificationisShown } from '../selectors'
 import { toast } from 'react-semantic-toasts';
-import { uiSetIsOnline } from '../actions'
 
 function isOnlineSourceChannel() {
   return eventChannel((emit) => {
@@ -120,15 +121,21 @@ function* showThreeUsersNotification() {
     const usersEdge = yield select(getUsersEdge)
 
     if (viewedUsers.length === usersEdge) {
-      const users = yield select(getUsersByIds)
-      const names = users.map(u => u.name)
-      
-      toast({
-        title: 'Congratulatin! You have shown three users!',
-        description: <p>Users: {names.join(', ')}</p>,
-        size: 'massive',
-        time: 3000
-      })
+      const isShown =   yield select(getThreeUserNorificationisShown)
+
+      if (!isShown) {
+        const users = yield select(getUsersByIds)
+        const names = users.map(u => u.name)
+
+        yield put(uiSetNotificationState(true))
+        
+        toast({
+          title: 'Congratulatin! You have shown three users!',
+          description: <p>Users: {names.join(', ')}</p>,
+          size: 'massive',
+          time: 3000
+        })
+      }
     }
   }
 }
