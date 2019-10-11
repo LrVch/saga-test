@@ -135,7 +135,9 @@ function* showThreeUsersNotification() {
           title: 'Congratulatin! You have shown three users!',
           description: <p>Users: {names.join(', ')}</p>,
           size: 'massive',
-          time: 3000
+          time: 3000,
+          color: 'green',
+          onDismiss: () => {}
         })
       }
     }
