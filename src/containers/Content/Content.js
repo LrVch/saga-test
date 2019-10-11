@@ -1,9 +1,28 @@
 import './Content.css'
 
-import { Button, Card, Dimmer, Icon, Loader, Segment } from 'semantic-ui-react'
-import { getAlbums, getIsContentLoading, getPosts, getSelectedUser, getShowing } from '../../store/selectors/users'
-import { usersClearContent, usersSetSelecteduser, usersSetShowing } from '../../store/actions'
+import {
+  Button,
+  Card,
+  Dimmer,
+  Icon,
+  Loader,
+  Segment
+} from 'semantic-ui-react'
+import {
+  getAlbums,
+  getIsContentLoading,
+  getIsOnLine,
+  getPosts,
+  getSelectedUser,
+  getShowing
+} from '../../store/selectors'
+import {
+  usersClearContent,
+  usersSetSelecteduser,
+  usersSetShowing
+} from '../../store/actions'
 
+import Block from '../../components/Block/Block'
 import Post from '../../components/Post/Post'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -11,12 +30,13 @@ import { connect } from 'react-redux'
 const Content = ({
   albums,
   isContentLoading,
+  isOnLine,
   posts,
   selectedUser,
+  showing,
   usersClearContent,
   usersSetSelecteduser,
   usersSetShowing,
-  showing
 }) => {
   const handleOnClose = () => {
     usersClearContent()
@@ -26,7 +46,7 @@ const Content = ({
   return (
     <>
       {selectedUser && <Segment className="content full-height">
-
+        {!isOnLine && <Block />}
         <div className="content__header">
           <Button onClick={handleOnClose} icon>
             <Icon name='times' />
@@ -45,11 +65,11 @@ const Content = ({
 
           {!isContentLoading && showing === 'albums' && <Card.Group itemsPerRow={4}>
             {albums.map((album, i) => <Card key={i} color='green'>
-            <Card.Content>
-            <Card.Description>
-              {album.title}
-            </Card.Description>
-            </Card.Content>
+              <Card.Content>
+                <Card.Description>
+                  {album.title}
+                </Card.Description>
+              </Card.Content>
             </Card>)}
           </Card.Group>}
 
@@ -64,7 +84,8 @@ const mapStateToProps = state => ({
   posts: getPosts(state),
   albums: getAlbums(state),
   isContentLoading: getIsContentLoading(state),
-  showing: getShowing(state)
+  showing: getShowing(state),
+  isOnLine: getIsOnLine(state)
 })
 
 const mapDispatchToProps = dispatch => ({

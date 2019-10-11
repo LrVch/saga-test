@@ -37,4 +37,19 @@ export const getShowing= createSelector(
   usersState => usersState.showing
 )
 
+export const getViewedUsers= createSelector(
+  usersState,
+  usersState => usersState.viewedUsers
+)
+
+export const getUsersEdge= createSelector(
+  usersState,
+  usersState => usersState.usersEdge
+)
+
+export const getUsersByIds = createSelector(
+  [getUsers, getViewedUsers],
+  (users, ids) => users.filter(user => ids.includes(user.id))
+)
+
 

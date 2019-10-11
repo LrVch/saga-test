@@ -1,4 +1,5 @@
 import {
+  USERS_CLEAR_CONTENT,
   USERS_GET_USER_ALBUMS_REQUEST,
   USERS_GET_USER_POSTS_REQUEST,
   getAllUsersFail,
@@ -52,16 +53,16 @@ export function* userAlbums(id) {
 }
 
 export function* getUserPosts(action) {
-  const existedPosts= yield select(getPosts)
+  const existedPosts = yield select(getPosts)
 
   if (existedPosts.length) {
     return yield put(usersGetUserPostsSuccess(existedPosts))
   }
 
-  const {id} = action.payload
-  const posts = yield fork(userPosts, id)
-  yield take(USERS_GET_USER_ALBUMS_REQUEST)
-  yield cancel(posts)
+  const { id } = action.payload
+  const task = yield fork(userPosts, id)
+  yield take([USERS_GET_USER_ALBUMS_REQUEST, USERS_CLEAR_CONTENT])
+  yield cancel(task)
 }
 
 export function* getUserAlbums(action) {
@@ -71,10 +72,10 @@ export function* getUserAlbums(action) {
     return yield put(usersGetUserAlbumsSuccess(existedAlbums))
   }
 
-  const {id} = action.payload
-  const albums = yield fork(userAlbums, id)
-  yield take(USERS_GET_USER_POSTS_REQUEST)
-  yield cancel(albums)
+  const { id } = action.payload
+  const task = yield fork(userAlbums, id)
+  yield take([USERS_GET_USER_ALBUMS_REQUEST, USERS_CLEAR_CONTENT])
+  yield cancel(task)
 }
 
 export default function* usersSaga() {

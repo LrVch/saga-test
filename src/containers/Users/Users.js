@@ -5,8 +5,10 @@ import React, { useEffect, useState } from 'react'
 import { getAllUsersRequest, usersGetUserAlbumsRequest, usersGetUserPostsRequest, usersSetSelecteduser, usersSetShowing } from '../../store/actions'
 import { getIsUsersLoading, getSelectedUser, getUsers } from '../../store/selectors/users'
 
+import Block from '../../components/Block/Block';
 import UserCard from '../../components/UserCard/UserCard'
 import { connect } from 'react-redux'
+import { getIsOnLine } from '../../store/selectors';
 
 const Users = ({
   getAllUsersRequest,
@@ -18,6 +20,7 @@ const Users = ({
   usersOnPageCount,
   usersSetSelecteduser,
   usersSetShowing,
+  isOnLine,
 }) => {
   const [pageUsers, setPageUsers] = useState([])
   const [totalPages, setTotalPages] = useState(0)
@@ -72,6 +75,7 @@ const Users = ({
 
   return (
     <div className="users">
+      {!isOnLine && <Block />}
       <div className="users__pagination" style={{
         opacity: !pageUsers.length ? 0 : 1,
       }}>
@@ -142,7 +146,8 @@ const Users = ({
 const mapStateToProps = state => ({
   users: getUsers(state),
   selectedUser: getSelectedUser(state),
-  isUsersLoading: getIsUsersLoading(state)
+  isUsersLoading: getIsUsersLoading(state),
+  isOnLine: getIsOnLine(state)
 })
 
 const mapDispatchToProps = dispatch => ({

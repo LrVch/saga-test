@@ -7,7 +7,9 @@ const initialState = {
   posts: [],
   selectedUser: null,
   users: [],
-  showing: null
+  showing: null,
+  viewedUsers: [],
+  usersEdge: 3
 }
 
 const usersReducer = (state = initialState, { type, payload }) => {
@@ -37,9 +39,11 @@ const usersReducer = (state = initialState, { type, payload }) => {
     }
 
     case actionsTypes.USERS_SET_SELECTED_USER: {
+      const { id } = payload
+
       return {
         ...state,
-        selectedUser: payload.id
+        selectedUser: id,
       }
     }
 
@@ -67,18 +71,26 @@ const usersReducer = (state = initialState, { type, payload }) => {
     }
 
     case actionsTypes.USERS_GET_USER_POSTS_SUCCESS: {
+      const { viewedUsers, selectedUser } = state
       return {
         ...state,
         isContentLoading: false,
-        posts: payload.posts
+        posts: payload.posts,
+        viewedUsers: (selectedUser && viewedUsers.indexOf(selectedUser) === -1)
+          ? [...viewedUsers, selectedUser]
+          : viewedUsers
       }
     }
 
     case actionsTypes.USERS_GET_USER_ALBUMS_SUCCESS: {
+      const { viewedUsers, selectedUser } = state
       return {
         ...state,
         isContentLoading: false,
-        albums: payload.albums
+        albums: payload.albums,
+        viewedUsers: (selectedUser && viewedUsers.indexOf(selectedUser) === -1)
+          ? [...viewedUsers, selectedUser]
+          : viewedUsers
       }
     }
 
@@ -97,7 +109,7 @@ const usersReducer = (state = initialState, { type, payload }) => {
       }
     }
 
-    
+
 
     default:
       return state
